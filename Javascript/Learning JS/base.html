@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -9,8 +9,10 @@
     ul { margin-top: 20px; }
   </style>
 </head>
+
 <body>
-<!-- <h1 id="heading">Hello Subarna</h1>
+  -->
+<!--  <h1 id="heading">Hello Subarna</h1>
   <button id="changeBtn">Change Text</button>
 
   <script src="day6.js"></script> -->
@@ -35,9 +37,65 @@
 
 </form>
   <ul id="taskList"></ul> -->
-  <ul id="list"></ul>
+ <!-- <ul id="list"></ul>
 
 
 <script src="day8.js"></script>
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head><title>Grocery List</title></head>
+<body>
+  <h1>Grocery List</h1>
+  <form id="form">
+    <input type="text" id="itemInput" placeholder="Enter item" />
+    <button>Add</button>
+  </form>
+  <ul id="list"></ul>
+
+  <script>
+    const form = document.getElementById("form");
+    const input = document.getElementById("itemInput");
+    const list = document.getElementById("list");
+
+    // Get from localStorage on load
+    let items = JSON.parse(localStorage.getItem("groceries")) || [];
+    renderList();
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const item = input.value.trim();
+      if (item) {
+        items.push(item);
+        localStorage.setItem("groceries", JSON.stringify(items));
+        renderList();
+        input.value = "";
+      }
+    });
+
+    function renderList() {
+      list.innerHTML = "";
+      items.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+
+        // Delete button
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "❌";
+        delBtn.style.marginLeft = "10px";
+        delBtn.addEventListener("click", () => {
+          items.splice(index, 1);
+          localStorage.setItem("groceries", JSON.stringify(items));
+          renderList();
+        });
+
+        li.appendChild(delBtn);
+        list.appendChild(li);
+      });
+    }
+  </script>
+</body>
 </html>
+
